@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "sup_01",
+    "name": "Global Academic Book Distributors Ltd",
+    "contactPerson": "Arthur Pendelton",
+    "email": "orders@globalacademicbooks.com",
+    "phone": "+1-800-444-2300",
+    "address": "Boston, MA",
+    "status": "ACTIVE",
+    "totalOrders": 14,
+    "createdAt": "2026-09-23T14:42:53.806636",
+    "updatedAt": "2026-09-23T14:42:53.806644"
+  },
+  {
+    "_id": "sup_02",
+    "name": "TechPress International Logistics",
+    "contactPerson": "Elena Rostov",
+    "email": "supply@techpressintl.org",
+    "phone": "+1-888-512-9900",
+    "address": "San Jose, CA",
+    "status": "ACTIVE",
+    "totalOrders": 9,
+    "createdAt": "2026-09-23T14:42:53.806970",
+    "updatedAt": "2026-09-23T14:42:53.806978"
+  }
+]

@@ -1,0 +1,106 @@
+[
+  {
+    "_id": "cat_01",
+    "name": "Software Engineering",
+    "code": "SE",
+    "description": "Design patterns, architecture, agile development, testing",
+    "createdAt": "2026-09-23T14:42:48.915861",
+    "updatedAt": "2026-09-23T14:42:48.915873"
+  },
+  {
+    "_id": "cat_02",
+    "name": "Artificial Intelligence",
+    "code": "AI",
+    "description": "Machine learning, neural networks, robotics, NLP",
+    "createdAt": "2026-09-23T14:42:48.916469",
+    "updatedAt": "2026-09-23T14:42:48.916479"
+  },
+  {
+    "_id": "cat_03",
+    "name": "Data Science",
+    "code": "DS",
+    "description": "Data mining, statistics, visualization, big data",
+    "createdAt": "2026-09-23T14:42:48.916871",
+    "updatedAt": "2026-09-23T14:42:48.916878"
+  },
+  {
+    "_id": "cat_04",
+    "name": "Computer Science",
+    "code": "CS",
+    "description": "Algorithms, data structures, computation theory",
+    "createdAt": "2026-09-23T14:42:48.917229",
+    "updatedAt": "2026-09-23T14:42:48.917237"
+  },
+  {
+    "_id": "cat_05",
+    "name": "Web Development",
+    "code": "WEB",
+    "description": "Modern frontend, backend, APIs, cloud deployments",
+    "createdAt": "2026-09-23T14:42:48.917573",
+    "updatedAt": "2026-09-23T14:42:48.917580"
+  },
+  {
+    "_id": "cat_06",
+    "name": "Cybersecurity",
+    "code": "SEC",
+    "description": "Network security, cryptography, penetration testing",
+    "createdAt": "2026-09-23T14:42:48.917970",
+    "updatedAt": "2026-09-23T14:42:48.917976"
+  },
+  {
+    "_id": "cat_07",
+    "name": "Cloud Computing",
+    "code": "CLOUD",
+    "description": "Distributed systems, microservices, containerization",
+    "createdAt": "2026-09-23T14:42:48.918357",
+    "updatedAt": "2026-09-23T14:42:48.918363"
+  },
+  {
+    "_id": "cat_08",
+    "name": "Database Systems",
+    "code": "DB",
+    "description": "Relational DBs, NoSQL, distributed storage, indexing",
+    "createdAt": "2026-09-23T14:42:48.918710",
+    "updatedAt": "2026-09-23T14:42:48.918714"
+  },
+  {
+    "_id": "cat_09",
+    "name": "Computer Networks",
+    "code": "NET",
+    "description": "Protocols, routing, wireless networks, socket programming",
+    "createdAt": "2026-09-23T14:42:48.919071",
+    "updatedAt": "2026-09-23T14:42:48.919076"
+  },
+  {
+    "_id": "cat_10",
+    "name": "Operating Systems",
+    "code": "OS",
+    "description": "Kernel architecture, process scheduling, memory management",
+    "createdAt": "2026-09-23T14:42:48.919438",
+    "updatedAt": "2026-09-23T14:42:48.919445"
+  },
+  {
+    "_id": "cat_11",
+    "name": "Engineering Mathematics",
+    "code": "MATH",
+    "description": "Calculus, linear algebra, probability, discrete mathematics",
+    "createdAt": "2026-09-23T14:42:48.920004",
+    "updatedAt": "2026-09-23T14:42:48.920012"
+  },
+  {
+    "_id": "cat_12",
+    "name": "Electronics & Hardware",
+    "code": "ECE",
+    "description": "Digital logic, microprocessors, signals & systems, circuits",
+    "createdAt": "2026-09-23T14:42:48.920700",
+    "updatedAt": "2026-09-23T14:42:48.920709"
+  },
+  {
+    "_id": "cat_13",
+    "name": "Management & Information Systems",
+    "code": "MGMT",
+    "description": "MIS, operations research, project management, accounting",
+    "createdAt": "2026-09-23T14:42:48.921319",
+    "updatedAt": "2026-09-23T14:42:48.921328"
+  }
+]

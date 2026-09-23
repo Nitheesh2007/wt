@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "cd2d0796-d06a-46f6-8dcb-95bdc0f155bb",
+    "bookingReference": "BK-20260923-45DC",
+    "facilityId": "fac_01",
+    "facilityName": "Quiet Research Pod A-01",
+    "facilityType": "CARREL",
+    "floor": "2nd Floor",
+    "userId": "usr_stu_01",
+    "userName": "Nitheesh",
+    "userEmail": "student@smartlib.edu",
+    "date": "2026-09-23",
+    "timeSlot": "09:00 - 11:00",
+    "status": "CANCELLED",
+    "createdAt": "2026-09-23T15:18:16.572857",
+    "updatedAt": "2026-09-23T15:22:43.129240"
+  }
+]

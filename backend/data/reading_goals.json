@@ -1,0 +1,15 @@
+[
+  {
+    "_id": "goal_001",
+    "userId": "usr_stu_01",
+    "title": "Spring Semester Reading Challenge",
+    "goalType": "SEMESTER",
+    "targetBooks": 12,
+    "completedBooks": 7,
+    "startDate": "2026-01-10",
+    "deadline": "2026-06-30",
+    "status": "IN_PROGRESS",
+    "createdAt": "2026-08-04T14:42:46.776534",
+    "updatedAt": "2026-09-23T14:42:53.802346"
+  }
+]

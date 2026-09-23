@@ -1,0 +1,24 @@
+[
+  {
+    "_id": "rev_001",
+    "bookId": "bk_001",
+    "userId": "usr_stu_01",
+    "userName": "Alex Chen",
+    "userAvatar": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150",
+    "rating": 5,
+    "comment": "Transformational read for anyone writing software professionally. Highly recommended.",
+    "createdAt": "2026-08-29T14:42:46.776534",
+    "updatedAt": "2026-09-23T14:42:53.802934"
+  },
+  {
+    "_id": "rev_002",
+    "bookId": "bk_013",
+    "userId": "usr_stu_02",
+    "userName": "Priya Sharma",
+    "userAvatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
+    "rating": 5,
+    "comment": "The definitive gold standard in AI education.",
+    "createdAt": "2026-09-05T14:42:46.776534",
+    "updatedAt": "2026-09-23T14:42:53.803273"
+  }
+]

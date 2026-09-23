@@ -1,0 +1,17 @@
+[
+  {
+    "_id": "res_001",
+    "reservationId": "RES-2026-0001",
+    "userId": "usr_stu_03",
+    "userName": "David Kim",
+    "bookId": "bk_013",
+    "bookTitle": "Computer System Architecture",
+    "queuePosition": 1,
+    "estimatedWaitDays": 4,
+    "reservationDate": "2026-09-21T14:42:46.776534",
+    "expiryDate": "2026-09-28T14:42:46.776534",
+    "status": "WAITING",
+    "createdAt": "2026-09-21T14:42:46.776534",
+    "updatedAt": "2026-09-23T14:42:53.800689"
+  }
+]

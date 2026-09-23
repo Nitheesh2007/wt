@@ -1,0 +1,65 @@
+[
+  {
+    "_id": "fac_01",
+    "name": "Quiet Research Pod A-01",
+    "type": "CARREL",
+    "capacity": 1,
+    "floor": "2nd Floor",
+    "amenities": [
+      "High-Speed Wi-Fi",
+      "Power Outlets",
+      "Ergonomic Chair",
+      "Desk Lamp"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-09-23T14:42:53.804035",
+    "updatedAt": "2026-09-23T14:42:53.804043"
+  },
+  {
+    "_id": "fac_02",
+    "name": "Quiet Research Pod A-02",
+    "type": "CARREL",
+    "capacity": 1,
+    "floor": "2nd Floor",
+    "amenities": [
+      "High-Speed Wi-Fi",
+      "Power Outlets",
+      "Desk Lamp"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-09-23T14:42:53.804394",
+    "updatedAt": "2026-09-23T14:42:53.804402"
+  },
+  {
+    "_id": "fac_03",
+    "name": "Collaborative Study Room 304",
+    "type": "ROOM",
+    "capacity": 6,
+    "floor": "3rd Floor",
+    "amenities": [
+      "Whiteboard",
+      "4K Display TV",
+      "Air Conditioning",
+      "Conference Table"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-09-23T14:42:53.804954",
+    "updatedAt": "2026-09-23T14:42:53.804963"
+  },
+  {
+    "_id": "fac_04",
+    "name": "Graduate Seminar Room 305",
+    "type": "ROOM",
+    "capacity": 12,
+    "floor": "3rd Floor",
+    "amenities": [
+      "Projector",
+      "Surround Audio",
+      "Podium",
+      "Modular Seating"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-09-23T14:42:53.805820",
+    "updatedAt": "2026-09-23T14:42:53.805830"
+  }
+]

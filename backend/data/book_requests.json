@@ -1,0 +1,34 @@
+[
+  {
+    "_id": "req_001",
+    "title": "Quantum Computing Since Democritus",
+    "author": "Scott Aaronson",
+    "isbn": "978-0521199567",
+    "category": "Computer Science",
+    "reason": "Essential for quantum complexity theory course and research paper.",
+    "requestedBy": "usr_stu_01",
+    "requestedByName": "Alex Chen",
+    "priority": "HIGH",
+    "status": "APPROVED",
+    "votesCount": 18,
+    "adminNotes": "Approved for purchase under academic budget.",
+    "createdAt": "2026-09-11T14:42:46.776534",
+    "updatedAt": "2026-09-23T14:42:53.801332"
+  },
+  {
+    "_id": "req_002",
+    "title": "Designing Embedded Systems with PIC Microcontrollers",
+    "author": "Tim Wilmshurst",
+    "isbn": "978-1856177504",
+    "category": "Robotics & Embedded",
+    "reason": "Required for embedded lab assignments.",
+    "requestedBy": "usr_stu_03",
+    "requestedByName": "David Kim",
+    "priority": "MEDIUM",
+    "status": "PENDING",
+    "votesCount": 9,
+    "adminNotes": "Under review.",
+    "createdAt": "2026-09-18T14:42:46.776534",
+    "updatedAt": "2026-09-23T14:42:53.801690"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "notif_001",
+    "userId": "usr_stu_01",
+    "title": "Welcome to Smart Library Hub",
+    "message": "Welcome Alex! Explore personalized AI recommendations and reserve library study pods.",
+    "type": "WELCOME",
+    "isRead": false,
+    "createdAt": "2026-07-25T14:42:46.776534",
+    "updatedAt": "2026-09-23T14:42:53.807777"
+  },
+  {
+    "_id": "notif_002",
+    "userId": "usr_stu_01",
+    "title": "Book Issued Successfully",
+    "message": "You have borrowed 'Clean Code: A Handbook of Agile Software Craftsmanship'.",
+    "type": "BOOK_ISSUED",
+    "isRead": true,
+    "createdAt": "2026-09-18T14:42:46.776534",
+    "updatedAt": "2026-09-23T14:42:53.808177"
+  },
+  {
+    "userId": "usr_stu_01",
+    "title": "Book Issued Successfully",
+    "message": "You borrowed 'Digital Logic and Computer Design'. Due date: October 07, 2026.",
+    "type": "BOOK_ISSUED",
+    "isRead": false,
+    "createdAt": "2026-09-23T15:21:40.747864",
+    "_id": "e9b8824f-5889-4f62-8d27-80471ebd0236",
+    "updatedAt": "2026-09-23T15:21:40.852573"
+  }
+]
