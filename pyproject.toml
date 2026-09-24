@@ -1,8 +1,0 @@
-[project]
-name = "hackwave-backend"
-version = "2.4.0"
-description = "HackWave Smart Library Backend"
-requires-python = ">=3.9"
-
-[tool.vercel]
-entrypoint = "backend.app:app"
