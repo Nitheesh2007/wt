@@ -321,6 +321,107 @@ class Cursor:
     def __list__(self):
         return self._data
 
+def _normalize_mongo_query(query):
+    if not query or not isinstance(query, dict):
+        return query or {}
+    q = copy.deepcopy(query)
+    if "_id" in q:
+        val = q["_id"]
+        if isinstance(val, str) and ObjectId.is_valid(val):
+            q["_id"] = {"$in": [val, ObjectId(val)]}
+        elif isinstance(val, dict) and "$in" in val and isinstance(val["$in"], list):
+            new_in = []
+            for item in val["$in"]:
+                new_in.append(item)
+                if isinstance(item, str) and ObjectId.is_valid(item):
+                    new_in.append(ObjectId(item))
+            q["_id"]["$in"] = new_in
+    return q
+
+class MongoCollectionWrapper:
+    """
+    Transparent PyMongo collection wrapper that ensures string ID compatibility,
+    timestamps, and query normalization across MongoDB Atlas and the application.
+    """
+    def __init__(self, col):
+        self._col = col
+        self.name = col.name
+
+    def create_index(self, *args, **kwargs):
+        try:
+            return self._col.create_index(*args, **kwargs)
+        except Exception:
+            return "index_skipped"
+
+    def insert_one(self, doc):
+        d = copy.deepcopy(doc)
+        if '_id' not in d or not d['_id']:
+            d['_id'] = str(uuid.uuid4())
+        else:
+            d['_id'] = str(d['_id'])
+        if 'createdAt' not in d:
+            d['createdAt'] = datetime.datetime.utcnow().isoformat()
+        if 'updatedAt' not in d:
+            d['updatedAt'] = datetime.datetime.utcnow().isoformat()
+        res = self._col.insert_one(d)
+        doc['_id'] = d['_id']
+        class InsertResult:
+            def __init__(self, id_): self.inserted_id = id_
+        return InsertResult(d['_id'])
+
+    def insert_many(self, docs):
+        cleaned = []
+        ids = []
+        for doc in docs:
+            d = copy.deepcopy(doc)
+            if '_id' not in d or not d['_id']:
+                d['_id'] = str(uuid.uuid4())
+            else:
+                d['_id'] = str(d['_id'])
+            if 'createdAt' not in d:
+                d['createdAt'] = datetime.datetime.utcnow().isoformat()
+            if 'updatedAt' not in d:
+                d['updatedAt'] = datetime.datetime.utcnow().isoformat()
+            cleaned.append(d)
+            ids.append(d['_id'])
+        if cleaned:
+            self._col.insert_many(cleaned)
+        class InsertManyResult:
+            def __init__(self, id_list): self.inserted_ids = id_list
+        return InsertManyResult(ids)
+
+    def find_one(self, query=None, *args, **kwargs):
+        doc = self._col.find_one(_normalize_mongo_query(query), *args, **kwargs)
+        return serialize_doc(doc)
+
+    def find(self, query=None, *args, **kwargs):
+        return self._col.find(_normalize_mongo_query(query), *args, **kwargs)
+
+    def update_one(self, query, update, *args, **kwargs):
+        if '$set' in update and 'updatedAt' not in update['$set']:
+            update['$set']['updatedAt'] = datetime.datetime.utcnow().isoformat()
+        return self._col.update_one(_normalize_mongo_query(query), update, *args, **kwargs)
+
+    def update_many(self, query, update, *args, **kwargs):
+        if '$set' in update and 'updatedAt' not in update['$set']:
+            update['$set']['updatedAt'] = datetime.datetime.utcnow().isoformat()
+        return self._col.update_many(_normalize_mongo_query(query), update, *args, **kwargs)
+
+    def delete_one(self, query, *args, **kwargs):
+        return self._col.delete_one(_normalize_mongo_query(query), *args, **kwargs)
+
+    def delete_many(self, query, *args, **kwargs):
+        return self._col.delete_many(_normalize_mongo_query(query), *args, **kwargs)
+
+    def count_documents(self, query=None, *args, **kwargs):
+        return self._col.count_documents(_normalize_mongo_query(query), *args, **kwargs)
+
+    def distinct(self, key, query=None, *args, **kwargs):
+        return self._col.distinct(key, _normalize_mongo_query(query), *args, **kwargs)
+
+    def aggregate(self, pipeline, *args, **kwargs):
+        return self._col.aggregate(pipeline, *args, **kwargs)
+
 class DatabaseManager:
     _instance = None
 
@@ -330,20 +431,29 @@ class DatabaseManager:
             cls._instance._init_db()
         return cls._instance
 
-    def _init_db(self):
+    def _init_db(self, custom_uri=None):
+        uri = custom_uri or os.getenv("MONGO_URI", MONGO_URI)
         self.is_connected_to_atlas = False
         self.mongo_client = None
         self.db = None
+        self.uri_sanitized = ""
 
-        if MONGO_URI and ("mongodb://" in MONGO_URI or "mongodb+srv://" in MONGO_URI):
+        if uri and ("mongodb://" in uri or "mongodb+srv://" in uri):
             try:
-                client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=2000, connectTimeoutMS=2000)
+                self.uri_sanitized = uri.split('@')[-1] if '@' in uri else "localhost:27017"
+                client = MongoClient(uri, serverSelectionTimeoutMS=5000, connectTimeoutMS=5000)
                 client.admin.command('ping')
                 self.mongo_client = client
-                db_name = MONGO_URI.split('/')[-1].split('?')[0] or "smart_library"
-                self.db = client[db_name]
+                
+                try:
+                    default_db = client.get_default_database()
+                    self.db = default_db if default_db is not None else client["smart_library"]
+                except Exception:
+                    db_name = uri.split('/')[-1].split('?')[0] or "smart_library"
+                    self.db = client[db_name]
+
                 self.is_connected_to_atlas = True
-                print(f"[*] Successfully connected to MongoDB at {MONGO_URI.split('@')[-1]}")
+                print(f"[*] Successfully connected to MongoDB at {self.uri_sanitized}")
             except Exception as e:
                 print(f"[!] MongoDB Atlas/Local connection failed ({e}). Falling back to robust persistent document store.")
                 self.is_connected_to_atlas = False
@@ -359,14 +469,67 @@ class DatabaseManager:
         self.collections = {}
         for col_name in self.collection_names:
             if self.is_connected_to_atlas and self.db is not None:
-                self.collections[col_name] = self.db[col_name]
+                self.collections[col_name] = MongoCollectionWrapper(self.db[col_name])
             else:
                 filepath = os.path.join(DATA_DIR, f"{col_name}.json")
                 self.collections[col_name] = PersistentJSONCollection(col_name, filepath)
 
+        # Auto-seed MongoDB from existing JSON data if MongoDB is fresh
+        if self.is_connected_to_atlas and self.db is not None:
+            self._ensure_mongodb_populated()
+
+    def _ensure_mongodb_populated(self):
+        try:
+            user_count = self.db["users"].count_documents({})
+            book_count = self.db["books"].count_documents({})
+            if user_count == 0 or book_count == 0:
+                print("[*] Connected to MongoDB, but collections are empty. Auto-migrating data to MongoDB...")
+                self.migrate_json_to_mongodb()
+        except Exception as err:
+            print(f"[!] Note on MongoDB auto-seed: {err}")
+
+    def migrate_json_to_mongodb(self):
+        if not self.is_connected_to_atlas or self.db is None:
+            return False, "Not connected to MongoDB."
+        
+        migrated = {}
+        for col_name in self.collection_names:
+            filepath = os.path.join(DATA_DIR, f"{col_name}.json")
+            if os.path.exists(filepath):
+                try:
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                    if isinstance(data, list) and len(data) > 0:
+                        mongo_col = self.db[col_name]
+                        mongo_col.delete_many({})
+                        # Ensure string _id
+                        cleaned = []
+                        for d in data:
+                            doc = copy.deepcopy(d)
+                            if '_id' not in doc:
+                                doc['_id'] = str(uuid.uuid4())
+                            else:
+                                doc['_id'] = str(doc['_id'])
+                            cleaned.append(doc)
+                        mongo_col.insert_many(cleaned)
+                        migrated[col_name] = len(cleaned)
+                except Exception as ex:
+                    print(f"[!] Error migrating {col_name}: {ex}")
+        
+        print(f"[+] Successfully migrated {sum(migrated.values())} documents across {len(migrated)} collections to MongoDB.")
+        return True, migrated
+
+    def reconnect(self, uri=None):
+        self._init_db(custom_uri=uri)
+        return self.is_connected_to_atlas
+
     def get_collection(self, name):
         if name in self.collections:
             return self.collections[name]
+        if self.is_connected_to_atlas and self.db is not None:
+            col = MongoCollectionWrapper(self.db[name])
+            self.collections[name] = col
+            return col
         filepath = os.path.join(DATA_DIR, f"{name}.json")
         col = PersistentJSONCollection(name, filepath)
         self.collections[name] = col
@@ -377,10 +540,13 @@ class DatabaseManager:
             "connected_to_atlas": self.is_connected_to_atlas,
             "engine": "MongoDB Atlas / PyMongo" if self.is_connected_to_atlas else "Persistent Document Store (Zero-Config / Failover)",
             "collections_count": len(self.collections),
-            "data_directory": DATA_DIR
+            "data_directory": DATA_DIR,
+            "database_name": self.db.name if (self.is_connected_to_atlas and self.db is not None) else "JSON_Fallback",
+            "server": self.uri_sanitized if self.is_connected_to_atlas else "Local JSON Store"
         }
 
 db_manager = DatabaseManager()
 
 def get_col(name):
     return db_manager.get_collection(name)
+

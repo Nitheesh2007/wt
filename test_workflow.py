@@ -21,7 +21,7 @@ def test_api():
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
 
     # 3. Issue Book
-    issue_data = json.dumps({"userId": "usr_stu_03", "bookId": "bk_07"}).encode()
+    issue_data = json.dumps({"userId": "usr_stu_03", "bookId": "bk_001"}).encode()
     req = urllib.request.Request(f"{base_url}/api/transactions/issue", data=issue_data, headers=headers)
     with urllib.request.urlopen(req) as resp:
         issue_res = json.loads(resp.read().decode())

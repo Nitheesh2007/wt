@@ -28,5 +28,25 @@
     "createdAt": "2026-09-23T15:21:40.747864",
     "_id": "e9b8824f-5889-4f62-8d27-80471ebd0236",
     "updatedAt": "2026-09-23T15:21:40.852573"
+  },
+  {
+    "userId": "usr_stu_03",
+    "title": "Book Issued Successfully",
+    "message": "You borrowed 'Software Engineering: A Practitioner's Approach'. Due date: October 08, 2026.",
+    "type": "BOOK_ISSUED",
+    "isRead": false,
+    "createdAt": "2026-09-24T04:06:25.878247",
+    "_id": "8991f0bf-b9a1-4608-b503-4384e2dd3578",
+    "updatedAt": "2026-09-24T04:06:25.907781"
+  },
+  {
+    "userId": "usr_stu_03",
+    "title": "Book Returned Successfully",
+    "message": "You returned 'Software Engineering: A Practitioner's Approach'. Fine assessed: $0.00.",
+    "type": "BOOK_RETURNED",
+    "isRead": false,
+    "createdAt": "2026-09-24T04:06:27.936414",
+    "_id": "321ebbbc-9fa6-4455-af52-17449e9536c4",
+    "updatedAt": "2026-09-24T04:06:28.048336"
   }
 ]

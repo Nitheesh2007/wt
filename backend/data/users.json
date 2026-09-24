@@ -95,11 +95,11 @@
     "year": "2nd Year",
     "status": "ACTIVE",
     "isBlocked": false,
-    "booksBorrowedCount": 5,
+    "booksBorrowedCount": 6,
     "currentBorrowedCount": 1,
     "totalFines": 0.0,
     "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150",
     "createdAt": "2026-08-09T14:42:46.776534",
-    "updatedAt": "2026-09-23T14:42:48.914642"
+    "updatedAt": "2026-09-24T04:06:28.004891"
   }
 ]

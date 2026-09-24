@@ -96,5 +96,32 @@
     "issuedByRole": "LIBRARIAN",
     "createdAt": "2026-09-23T15:21:40.747864",
     "updatedAt": "2026-09-23T15:21:40.748155"
+  },
+  {
+    "_id": "3260553d-86b2-4a22-a5d8-170d03ca9078",
+    "transactionId": "TXN-2026-453387",
+    "userId": "usr_stu_03",
+    "userName": "David Kim",
+    "userEmail": "david.kim@smartlib.edu",
+    "studentId": "MSC-DS-2026-019",
+    "bookId": "bk_001",
+    "bookTitle": "Software Engineering: A Practitioner's Approach",
+    "isbn": "978-013-0000-317",
+    "copyId": "copy_00001",
+    "barcode": "SL-BC-000317-01",
+    "issueDate": "2026-09-24T04:06:25.878247",
+    "dueDate": "2026-10-08T04:06:25.878247",
+    "returnDate": "2026-09-24T04:06:27.936414",
+    "status": "RETURNED",
+    "renewalCount": 0,
+    "maxRenewals": 2,
+    "fineAmount": 0.0,
+    "paymentStatus": "PAID",
+    "issuedBy": "Dr. Eleanor Vance",
+    "issuedByRole": "ADMIN",
+    "createdAt": "2026-09-24T04:06:25.878247",
+    "updatedAt": "2026-09-24T04:06:27.936753",
+    "overdueDays": 0,
+    "returnedBy": "Dr. Eleanor Vance"
   }
 ]
