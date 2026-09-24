@@ -8,8 +8,9 @@ if ROOT_DIR not in sys.path:
 
 from backend.app import app
 
-# Expose both app and application for Vercel WSGI / Serverless
+# Expose app, application, and handler for Vercel WSGI / Serverless
 application = app
+handler = app
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))

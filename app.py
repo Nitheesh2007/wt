@@ -8,8 +8,9 @@ if ROOT_DIR not in sys.path:
 
 from backend.app import app
 
-# Expose app and application callables for Vercel and WSGI servers
+# Expose app, application, and handler callables for Vercel and WSGI servers
 application = app
+handler = app
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
