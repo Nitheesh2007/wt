@@ -13,7 +13,10 @@ load_dotenv()
 
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/smart_library")
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
-os.makedirs(DATA_DIR, exist_ok=True)
+try:
+    os.makedirs(DATA_DIR, exist_ok=True)
+except Exception:
+    pass
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
@@ -50,13 +53,19 @@ class PersistentJSONCollection:
     def __init__(self, name, filepath):
         self.name = name
         self.filepath = filepath
+        self.tmp_filepath = os.path.join("/tmp", "data", f"{self.name}.json") if os.environ.get("VERCEL") else None
         self._data = []
         self._load()
 
     def _load(self):
-        if os.path.exists(self.filepath):
+        # On Vercel, prioritize /tmp/data/{name}.json if it exists (for session writes)
+        path_to_read = self.filepath
+        if self.tmp_filepath and os.path.exists(self.tmp_filepath):
+            path_to_read = self.tmp_filepath
+
+        if os.path.exists(path_to_read):
             try:
-                with open(self.filepath, 'r', encoding='utf-8') as f:
+                with open(path_to_read, 'r', encoding='utf-8') as f:
                     self._data = json.load(f)
             except Exception:
                 self._data = []
@@ -64,11 +73,20 @@ class PersistentJSONCollection:
             self._data = []
 
     def _save(self):
+        target_path = self.filepath
+        if os.environ.get("VERCEL") and self.tmp_filepath:
+            try:
+                os.makedirs(os.path.dirname(self.tmp_filepath), exist_ok=True)
+                target_path = self.tmp_filepath
+            except Exception:
+                pass
+
         try:
-            with open(self.filepath, 'w', encoding='utf-8') as f:
+            with open(target_path, 'w', encoding='utf-8') as f:
                 json.dump(self._data, f, indent=2, cls=JSONEncoder)
         except Exception as e:
-            print(f"Error saving collection {self.name}: {e}")
+            # On read-only serverless, silence filesystem write warnings
+            pass
 
     def _matches(self, doc, query):
         if not query:
@@ -438,10 +456,16 @@ class DatabaseManager:
         self.db = None
         self.uri_sanitized = ""
 
+        is_vercel = bool(os.environ.get("VERCEL"))
+        # If on Vercel and MONGO_URI is pointing to localhost, skip attempting to connect to avoid serverless timeout
+        if is_vercel and ("localhost" in uri or "127.0.0.1" in uri):
+            uri = ""
+
         if uri and ("mongodb://" in uri or "mongodb+srv://" in uri):
             try:
                 self.uri_sanitized = uri.split('@')[-1] if '@' in uri else "localhost:27017"
-                client = MongoClient(uri, serverSelectionTimeoutMS=5000, connectTimeoutMS=5000)
+                timeout_ms = 3000 if is_vercel else 5000
+                client = MongoClient(uri, serverSelectionTimeoutMS=timeout_ms, connectTimeoutMS=timeout_ms)
                 client.admin.command('ping')
                 self.mongo_client = client
                 

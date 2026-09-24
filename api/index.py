@@ -8,7 +8,7 @@ if ROOT_DIR not in sys.path:
 
 from backend.app import app
 
-# Expose WSGI application callable for Vercel Serverless Functions
+# Expose both app and application for Vercel WSGI / Serverless
 application = app
 
 if __name__ == "__main__":

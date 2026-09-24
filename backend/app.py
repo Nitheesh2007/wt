@@ -20,9 +20,16 @@ from backend.ai.recommender import recommender
 
 app = Flask(__name__)
 
-# Configure uploads directory
-UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+# Configure uploads directory (safely handle Vercel read-only filesystem)
+if os.environ.get("VERCEL"):
+    UPLOAD_FOLDER = "/tmp/uploads"
+else:
+    UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
+
+try:
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+except Exception:
+    pass
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # Configure CORS

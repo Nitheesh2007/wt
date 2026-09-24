@@ -404,5 +404,33 @@
     "_id": "e2be8b74-745f-41c6-8197-15157e85f848",
     "createdAt": "2026-09-24T04:06:28.052796",
     "updatedAt": "2026-09-24T04:06:28.052825"
+  },
+  {
+    "userId": "usr_stu_01",
+    "userName": "Nitheesh",
+    "role": "STUDENT",
+    "action": "UPDATE_PROFILE",
+    "entity": "USER",
+    "targetId": "usr_stu_01",
+    "description": "User updated profile details",
+    "ip": "127.0.0.1",
+    "timestamp": "2026-09-24T04:08:33.536256",
+    "_id": "301380eb-33de-4c73-92ed-9aa24fe714f0",
+    "createdAt": "2026-09-24T04:08:33.536434",
+    "updatedAt": "2026-09-24T04:08:33.536461"
+  },
+  {
+    "userId": "usr_stu_01",
+    "userName": "Nitheesh",
+    "role": "STUDENT",
+    "action": "UPDATE_PROFILE",
+    "entity": "USER",
+    "targetId": "usr_stu_01",
+    "description": "User updated profile details",
+    "ip": "127.0.0.1",
+    "timestamp": "2026-09-24T04:08:40.581335",
+    "_id": "2b429e50-376d-4960-8658-2a04ed6ebd05",
+    "createdAt": "2026-09-24T04:08:40.581507",
+    "updatedAt": "2026-09-24T04:08:40.581533"
   }
 ]
