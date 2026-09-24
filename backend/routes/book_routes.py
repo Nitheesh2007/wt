@@ -26,8 +26,11 @@ def upload_book_cover():
     if ext not in [".jpg", ".jpeg", ".png", ".webp", ".svg"]:
         return jsonify({"success": False, "message": "Supported formats are JPG, PNG, WEBP, SVG."}), 400
 
-    upload_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "uploads")
-    os.makedirs(upload_dir, exist_ok=True)
+    upload_dir = "/tmp/uploads" if os.environ.get("VERCEL") else os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "uploads")
+    try:
+        os.makedirs(upload_dir, exist_ok=True)
+    except Exception:
+        pass
     filename = f"cover_{uuid.uuid4().hex[:12]}{ext}"
     target_path = os.path.join(upload_dir, filename)
     file.save(target_path)

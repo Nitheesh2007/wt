@@ -1,0 +1,8 @@
+# Vercel Deployment Ignore Rules
+# Exclude test files and root standalone scripts so only api/index.py is deployed as the serverless function
+app.py
+test_mongo.py
+test_workflow.py
+powershell.cmd
+frontend/powershell.cmd
+*.log

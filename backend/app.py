@@ -88,13 +88,14 @@ def unprocessable_entity(e):
 def server_error(e):
     return jsonify({"success": False, "message": "Internal server error occurred.", "error": str(e)}), 500
 
-# Fit AI recommender on startup
-try:
-    print("[*] Initializing AI Recommendation TF-IDF model...")
-    recommender.fit()
-    print("[+] AI Recommendation Engine fitted and ready.")
-except Exception as e:
-    print(f"[!] Warning fitting recommender on startup: {e}")
+# Fit AI recommender on startup (defer on Vercel serverless to guarantee fast cold starts)
+if not os.environ.get("VERCEL"):
+    try:
+        print("[*] Initializing AI Recommendation TF-IDF model...")
+        recommender.fit()
+        print("[+] AI Recommendation Engine fitted and ready.")
+    except Exception as e:
+        print(f"[!] Warning fitting recommender on startup: {e}")
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
