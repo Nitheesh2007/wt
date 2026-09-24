@@ -176,7 +176,7 @@ def upload_avatar():
     target_path = os.path.join(upload_dir, filename)
     file.save(target_path)
 
-    avatar_url = f"http://localhost:5000/uploads/{filename}"
+    avatar_url = f"/uploads/{filename}"
     user_id = g.current_user.get("_id")
     user_col = get_col("users")
     user_col.update_one(

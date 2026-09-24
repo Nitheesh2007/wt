@@ -32,7 +32,7 @@ def upload_book_cover():
     target_path = os.path.join(upload_dir, filename)
     file.save(target_path)
 
-    image_url = f"http://localhost:5000/uploads/{filename}"
+    image_url = f"/uploads/{filename}"
     return jsonify({
         "success": True,
         "message": "Book cover image uploaded successfully.",

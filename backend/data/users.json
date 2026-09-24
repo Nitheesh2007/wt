@@ -56,7 +56,7 @@
     "booksBorrowedCount": 9,
     "currentBorrowedCount": 3,
     "totalFines": 0.0,
-    "avatar": "http://localhost:5000/uploads/avatar_f54bf43eba95.png",
+    "avatar": "/uploads/avatar_f54bf43eba95.png",
     "createdAt": "2026-07-25T14:42:46.776534",
     "updatedAt": "2026-09-23T15:25:41.720906",
     "bio": "Computer Science & Engineering scholar focusing on distributed systems and AI library architectures.",
